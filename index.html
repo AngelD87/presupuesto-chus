@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presupuesto Eléctrico Chus - Mieres</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+      background: #f2f2f2;
+    }
+
+    .presupuesto {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #fff;
+      border: 2px solid #000;
+      padding: 0;
+    }
+
+    .titulo {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      padding: 10px 15px;
+      border-bottom: 2px solid #000;
+    }
+
+    .contenido {
+      display: grid;
+      grid-template-columns: 1fr 330px;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 13px;
+    }
+
+    th {
+      background: #4f83bd;
+      color: #fff;
+      border: 1px solid #000;
+      padding: 8px 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    td {
+      border: 1px solid #000;
+      padding: 4px 5px;
+      vertical-align: middle;
+    }
+
+    .articulo {
+      width: 36%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cantidad {
+      width: 9%;
+      text-align: right;
+    }
+
+    .precio,
+    .mano,
+    .subtotal {
+      width: 12%;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .proveedor {
+      width: 19%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fila-mano-obra td {
+      background: #111;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .fila-total td {
+      font-size: 15px;
+      font-weight: bold;
+      background: #dcecc2;
+    }
+
+    .fila-total .total-final {
+      background: #fff;
+      text-align: right;
+      font-size: 16px;
+    }
+
+    .lateral {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .leyenda {
+      border: 2px solid #000;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .leyenda div {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: center;
+      min-height: 28px;
+    }
+
+    .color-rojo { background: #ff0000; height: 28px; }
+    .color-naranja { background: #f1760d; height: 28px; }
+    .color-azul { background: #1f6073; height: 28px; }
+    .color-verde { background: #485c25; height: 28px; }
+    .color-granate { background: #c90000; height: 50px; }
+
+    .leyenda span {
+      padding-left: 8px;
+    }
+
+    .caja-vivienda {
+      height: 360px;
+      border: 2px solid #000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 20px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .consulta {
+      border: 2px solid #000;
+      padding: 6px;
+      font-size: 17px;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .notas {
+      border: 2px solid #000;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .notas h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .pie {
+      padding: 15px 20px 20px;
+      font-size: 12px;
+      color: #333;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .presupuesto {
+        width: 100%;
+        max-width: none;
+        border: 2px solid #000;
+      }
+
+      .contenido {
+        grid-template-columns: 1fr 300px;
+        gap: 20px;
+        padding: 15px;
+      }
+
+      table {
+        font-size: 11px;
+      }
+
+      .titulo {
+        font-size: 22px;
+      }
+
+      .caja-vivienda {
+        height: 300px;
+      }
+
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="presupuesto">
+    <div class="titulo">Presupuesto Eléctrico Chus: Mieres</div>
+
+    <div class="contenido">
+      <div class="tabla-principal">
+        <table>
+          <thead>
+            <tr>
+              <th class="articulo">Artículo</th>
+              <th class="cantidad">Cantidad</th>
+              <th class="precio">Precio Unitario</th>
+              <th class="proveedor">Proveedor</th>
+              <th class="mano">Costo Mano de Obra</th>
+              <th class="subtotal">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="articulo">5 CONMUTADORES MONOBLOC</td><td class="cantidad">2</td><td class="precio">13,93 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">27,86 €</td></tr>
+            <tr><td class="articulo">CRUZAMIENTO MONOBLOC</td><td class="cantidad">3</td><td class="precio">4,93 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">14,79 €</td></tr>
+            <tr><td class="articulo">TOMA TV-RADIO-SAT MONOBLOC</td><td class="cantidad">4</td><td class="precio">13,93 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">55,72 €</td></tr>
+            <tr><td class="articulo">5 SCHUKOS MONOBLOC</td><td class="cantidad">6</td><td class="precio">14,31 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">85,86 €</td></tr>
+            <tr><td class="articulo">PULSADOR NEUTRO MONOBLOC</td><td class="cantidad">1</td><td class="precio">3,47 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">3,47 €</td></tr>
+            <tr><td class="articulo">MARCO DOBLE SERIE A</td><td class="cantidad">10</td><td class="precio">1,47 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">14,70 €</td></tr>
+            <tr><td class="articulo">MARCO TRIPLE SERIE A</td><td class="cantidad">5</td><td class="precio">2,24 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">11,20 €</td></tr>
+            <tr><td class="articulo">TIMBRE CLÁSICO 125/230V</td><td class="cantidad">1</td><td class="precio">10,94 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">10,94 €</td></tr>
+            <tr><td class="articulo">TOMA RED RJ45 SERIE</td><td class="cantidad">4</td><td class="precio">9,25 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">37,00 €</td></tr>
+            <tr><td class="articulo">REPARTIDOR INTERIOR</td><td class="cantidad">1</td><td class="precio">10,79 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">10,79 €</td></tr>
+            <tr><td class="articulo">Amplificador Interior TV</td><td class="cantidad">1</td><td class="precio">37,67 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">37,67 €</td></tr>
+            <tr><td class="articulo">SWITCH 5 PUERTOS 10/100</td><td class="cantidad">1</td><td class="precio">8,95 €</td><td class="proveedor">ALMACEN ELECTRICO</td><td class="mano"></td><td class="subtotal">8,95 €</td></tr>
+            <tr><td class="articulo">Base Multiple 3 Tomas</td><td class="cantidad">1</td><td class="precio">3,10 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">3,10 €</td></tr>
+            <tr><td class="articulo">Caja de Registro Eléctrica</td><td class="cantidad">1</td><td class="precio">8,40 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">8,40 €</td></tr>
+            <tr><td class="articulo">Caja de Registro Eléctrica</td><td class="cantidad">12</td><td class="precio">5,15 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">61,80 €</td></tr>
+            <tr><td class="articulo">Caja de Mecanismos</td><td class="cantidad">2</td><td class="precio">3,30 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">6,60 €</td></tr>
+            <tr><td class="articulo">Cuadro Eléctrico para vivienda</td><td class="cantidad">1</td><td class="precio">34,50 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">34,50 €</td></tr>
+            <tr><td class="articulo">Pack Electrificación Básica</td><td class="cantidad">1</td><td class="precio">61,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">61,00 €</td></tr>
+            <tr><td class="articulo">Peines Bipolar</td><td class="cantidad">4</td><td class="precio">8,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">32,00 €</td></tr>
+            <tr><td class="articulo">Regletas</td><td class="cantidad">1</td><td class="precio">40,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">40,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">46,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">46,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">46,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">46,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">46,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">46,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">46,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">46,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">46,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">46,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">76,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">76,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">76,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">76,00 €</td></tr>
+            <tr><td class="articulo">Hilos Flexible Libre Halógenos</td><td class="cantidad">1</td><td class="precio">76,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">76,00 €</td></tr>
+            <tr><td class="articulo">HILO FLEXIBLE LIBRE HALÓGENOS</td><td class="cantidad">25</td><td class="precio">1,40 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">35,00 €</td></tr>
+            <tr><td class="articulo">HILO FLEXIBLE LIBRE HALÓGENOS</td><td class="cantidad">25</td><td class="precio">1,40 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">35,00 €</td></tr>
+            <tr><td class="articulo">HILO FLEXIBLE LIBRE HALÓGENOS</td><td class="cantidad">25</td><td class="precio">1,40 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">35,00 €</td></tr>
+            <tr><td class="articulo">HILO FLEXIBLE LIBRE HALÓGENOS</td><td class="cantidad">40</td><td class="precio">1,70 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">68,00 €</td></tr>
+            <tr><td class="articulo">HILO FLEXIBLE LIBRE HALÓGENOS</td><td class="cantidad">40</td><td class="precio">1,70 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">68,00 €</td></tr>
+            <tr><td class="articulo">HILO FLEXIBLE LIBRE HALÓGENOS</td><td class="cantidad">40</td><td class="precio">1,70 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">68,00 €</td></tr>
+            <tr><td class="articulo">CABLE DE DATOS UTP</td><td class="cantidad">1</td><td class="precio">44,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">44,00 €</td></tr>
+            <tr><td class="articulo">TUBO CORRUGADO APLASTAMIENTO</td><td class="cantidad">4</td><td class="precio">18,70 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">74,80 €</td></tr>
+            <tr><td class="articulo">TUBO CORRUGADO REFORZADO</td><td class="cantidad">1</td><td class="precio">18,70 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">18,70 €</td></tr>
+            <tr><td class="articulo">TUBO CORRUGADO LIBRE HALÓGENOS</td><td class="cantidad">1</td><td class="precio">31,63 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">31,63 €</td></tr>
+            <tr><td class="articulo">TUBO CORRUGADO REFORZADO</td><td class="cantidad">1</td><td class="precio">23,30 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">23,30 €</td></tr>
+            <tr><td class="articulo">TUBO RÍGIDO PVC GRIS</td><td class="cantidad">15</td><td class="precio">3,93 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">58,95 €</td></tr>
+            <tr><td class="articulo">ABRAZADERA MULTIUSO</td><td class="cantidad">3</td><td class="precio">3,45 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">10,35 €</td></tr>
+            <tr><td class="articulo">MANGUITO PVC ENCHUFABLE</td><td class="cantidad">10</td><td class="precio">0,72 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">7,20 €</td></tr>
+            <tr><td class="articulo">BORNA SIGMA PARA CARRIL</td><td class="cantidad">1</td><td class="precio">5,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">5,00 €</td></tr>
+            <tr><td class="articulo">BORNA CARRIL DIN NEGRA</td><td class="cantidad">1</td><td class="precio">1,40 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">1,40 €</td></tr>
+            <tr><td class="articulo">BORNA CARRIL DIN AZUL</td><td class="cantidad">1</td><td class="precio">1,40 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">1,40 €</td></tr>
+            <tr><td class="articulo">Certificado de Instalación / Boletín</td><td class="cantidad">1</td><td class="precio">320,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">320,00 €</td></tr>
+            <tr class="fila-mano-obra"><td>MANO DE OBRA</td><td class="cantidad">1</td><td class="precio">1.300,00 €</td><td></td><td></td><td class="subtotal">1.300,00 €</td></tr>
+            <tr class="fila-total"><td>Total</td><td></td><td></td><td></td><td></td><td class="total-final">3.276,08 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="lateral">
+        <div class="leyenda">
+          <div><span class="color-rojo"></span><span>Consultar precio en almacén</span></div>
+          <div><span class="color-naranja"></span><span>Comprobar</span></div>
+          <div><span class="color-azul"></span><span>Buscar en almacén para empotrar</span></div>
+          <div><span class="color-verde"></span><span>Comprobar fusibles</span></div>
+          <div><span class="color-granate"></span><span>MEDICIONES</span></div>
+        </div>
+
+        <div class="caja-vivienda">Vivienda</div>
+
+        <div class="consulta">Consulta precios: https://www.obramat.es/</div>
+
+        <div class="notas">
+          <h3>Observaciones</h3>
+          <p>Presupuesto orientativo para instalación eléctrica en vivienda.</p>
+          <p>Incluye materiales detallados, mano de obra, montaje de cuadro, mecanismos, pruebas y certificado/boletín eléctrico.</p>
+          <p>No se incluyen rozas, albañilería, pintura ni trabajos no especificados en este documento.</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="pie">
+      Presupuesto sujeto a revisión según mediciones finales, disponibilidad de materiales y estado real de la instalación.
+    </div>
+  </div>
+</body>
+</html>
