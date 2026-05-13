@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presupuesto Eléctrico Ujo</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+      background: #f2f2f2;
+    }
+
+    .presupuesto {
+      width: min(1450px, 100%);
+      margin: 0 auto;
+      background: #fff;
+      border: 2px solid #000;
+    }
+
+    .titulo {
+      text-align: center;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 700;
+      padding: 12px 15px;
+      border-bottom: 2px solid #000;
+    }
+
+    .contenido {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 30px;
+      padding: 20px;
+      align-items: start;
+    }
+
+    .tabla-principal {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 13px;
+    }
+
+    th {
+      background: #4f83bd;
+      color: #fff;
+      border: 1px solid #000;
+      padding: 7px 5px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    td {
+      border: 1px solid #000;
+      padding: 5px;
+      vertical-align: middle;
+      line-height: 1.25;
+    }
+
+    .articulo {
+      width: 36%;
+      word-break: break-word;
+    }
+
+    .cantidad {
+      width: 8%;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .precio {
+      width: 12%;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .proveedor {
+      width: 18%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mano {
+      width: 13%;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .subtotal {
+      width: 13%;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .fila-mano-obra td {
+      background: #111;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .fila-total td {
+      font-size: 15px;
+      font-weight: bold;
+      background: #dcecc2;
+    }
+
+    .fila-total .total-final {
+      background: #fff;
+      text-align: right;
+      font-size: 16px;
+    }
+
+    .lateral {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .leyenda {
+      border: 2px solid #000;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .leyenda div {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: center;
+      min-height: 28px;
+    }
+
+    .color-rojo { background: #ff0000; height: 52px; }
+    .color-naranja { background: #f1760d; height: 52px; }
+    .color-azul { background: #1f6073; height: 52px; }
+    .color-verde { background: #485c25; height: 70px; }
+    .color-granate { background: #c90000; height: 70px; }
+
+    .leyenda span { padding-left: 8px; }
+
+    .caja-vivienda {
+      height: 320px;
+      border: 2px solid #000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 20px;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: bold;
+    }
+
+    .consulta {
+      border: 2px solid #000;
+      padding: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .notas {
+      border: 2px solid #000;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .notas h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .pie {
+      padding: 15px 20px 20px;
+      font-size: 12px;
+      color: #333;
+    }
+
+    @media (max-width: 1100px) {
+      body { padding: 12px; }
+
+      .contenido {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 14px;
+      }
+
+      table { min-width: 880px; }
+
+      .lateral {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .notas,
+      .consulta { grid-column: 1 / -1; }
+
+      .caja-vivienda { height: 190px; }
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 6px;
+        background: #fff;
+      }
+
+      .presupuesto { border: 1px solid #000; }
+
+      .titulo {
+        font-size: 19px;
+        padding: 10px 8px;
+      }
+
+      .contenido { padding: 8px; }
+
+      table {
+        min-width: 860px;
+        font-size: 12px;
+      }
+
+      th {
+        font-size: 11px;
+        padding: 6px 4px;
+      }
+
+      td { padding: 4px; }
+
+      .lateral {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .leyenda { font-size: 13px; }
+      .leyenda div { grid-template-columns: 55px 1fr; }
+      .caja-vivienda { height: 140px; font-size: 23px; }
+      .consulta { font-size: 13px; }
+      .notas { font-size: 12px; }
+      .pie { padding: 10px; font-size: 11px; }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .presupuesto {
+        width: 100%;
+        max-width: none;
+        border: 2px solid #000;
+      }
+
+      .contenido {
+        grid-template-columns: 1fr 300px;
+        gap: 20px;
+        padding: 15px;
+      }
+
+      .tabla-principal { overflow: visible; }
+      table { min-width: 0; font-size: 10px; }
+      th { font-size: 10px; }
+      .titulo { font-size: 22px; }
+      .caja-vivienda { height: 300px; }
+
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="presupuesto">
+    <div class="titulo">Presupuesto Eléctrico Ujo</div>
+
+    <div class="contenido">
+      <div class="tabla-principal">
+        <table>
+          <thead>
+            <tr>
+              <th class="articulo">Artículo</th>
+              <th class="cantidad">Cantidad</th>
+              <th class="precio">Precio Unitario</th>
+              <th class="proveedor">Proveedor</th>
+              <th class="mano">Mano de Obra</th>
+              <th class="subtotal">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="articulo">CABLE LIBRE DE HALÓGENOS RZ1-K 3G 10MM2 VERDE METRO LINEAL</td><td class="cantidad">25</td><td class="precio">6,38 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">159,50 €</td></tr>
+            <tr><td class="articulo">TUBO CORRUGADO REFORZADO NEGRO 32MM 50M</td><td class="cantidad">1</td><td class="precio">23,30 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">23,30 €</td></tr>
+            <tr><td class="articulo">BORNA CARRIL DIN NEGRO 10 MM2</td><td class="cantidad">4</td><td class="precio">13,93 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">55,72 €</td></tr>
+            <tr><td class="articulo">CUADRO ELÉCTRICO PARA SUPERFICIE EN VIVIENDA DE 42 ELEMENTOS IP40 SOLERA</td><td class="cantidad">1</td><td class="precio">29,75 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">29,75 €</td></tr>
+            <tr><td class="articulo">PACK ELECTRIFICACIÓN BÁSICA SCHNEIDER RESI9</td><td class="cantidad">1</td><td class="precio">61,00 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">61,00 €</td></tr>
+            <tr><td class="articulo">Caja derivación canaleta 75X75</td><td class="cantidad">5</td><td class="precio">5,89 €</td><td class="proveedor">LEROY MERLIN</td><td class="mano"></td><td class="subtotal">29,45 €</td></tr>
+            <tr><td class="articulo">CANALETA ADHESIVA BLANCA 12X32MM 2M</td><td class="cantidad">10</td><td class="precio">4,88 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">48,80 €</td></tr>
+            <tr><td class="articulo">CANALETA PARA CABLES BLANCO 25X40MM 2M</td><td class="cantidad">10</td><td class="precio">8,13 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">81,30 €</td></tr>
+            <tr><td class="articulo">ZÓCALO SIMPLE SERIE SUPERFICIE UNIVERSAL</td><td class="cantidad">2</td><td class="precio">1,90 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">3,80 €</td></tr>
+            <tr><td class="articulo">ZÓCALO DOBLE SERIE SUPERFICIE UNIVERSAL</td><td class="cantidad">2</td><td class="precio">2,40 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">4,80 €</td></tr>
+            <tr><td class="articulo">5 SCHUKOS MONOBLOC SERIE ASFORA BLANCO</td><td class="cantidad">1</td><td class="precio">14,31 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">14,31 €</td></tr>
+            <tr><td class="articulo">SCHUKO CON PROTECCIÓN MONOBLOC SERIE ASFORA BLANCO</td><td class="cantidad">1</td><td class="precio">3,58 €</td><td class="proveedor">OBRAMAT</td><td class="mano"></td><td class="subtotal">3,58 €</td></tr>
+
+            <tr class="fila-mano-obra"><td>MANO DE OBRA</td><td class="cantidad">1</td><td class="precio">600,00 €</td><td></td><td></td><td class="subtotal">600,00 €</td></tr>
+            <tr class="fila-total"><td>Total</td><td></td><td></td><td></td><td></td><td class="total-final">1.115,31 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="lateral">
+        <div class="leyenda">
+          <div><span class="color-rojo"></span><span>Consultar precio en almacén</span></div>
+          <div><span class="color-naranja"></span><span>Comprobar</span></div>
+          <div><span class="color-azul"></span><span>Buscar en almacén para empotrar</span></div>
+          <div><span class="color-verde"></span><span>Comprobar fusibles</span></div>
+          <div><span class="color-granate"></span><span>MEDICIONES</span></div>
+        </div>
+
+        <div class="caja-vivienda">Instalación</div>
+
+        <div class="consulta">Consulta precios: https://www.obramat.es/</div>
+
+        <div class="notas">
+          <h3>Observaciones</h3>
+          <p>Presupuesto orientativo para instalación eléctrica en superficie.</p>
+          <p>Incluye montaje de canaletas, tendido de cableado, instalación de mecanismos, conexionado de cuadro eléctrico, pruebas y puesta en marcha.</p>
+          <p>No se incluyen rozas, albañilería, pintura ni trabajos no especificados en este documento.</p>
+          <p>Materiales calculados según los artículos visibles en el presupuesto. El total puede variar si se añaden más materiales o mediciones finales.</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="pie">
+      Presupuesto sujeto a revisión según mediciones finales, disponibilidad de materiales y estado real de la instalación.
+    </div>
+  </div>
+</body>
+</html>
